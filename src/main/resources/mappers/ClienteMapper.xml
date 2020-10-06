@@ -85,7 +85,7 @@
 
   <insert parameterType="map" id="agregarItemRentadoACliente">
     INSERT INTO
-    VI_ITEMRENTADO ( CLIENTES_documento, ITEMS_id, fechainiciorenta, fechafinrenta) 
+    VI_ITEMRENTADO (CLIENTES_documento, ITEMS_id, fechainiciorenta, fechafinrenta) 
     VALUES ( #{idcli}, #{idit}, #{fechainicio}, #{fechafin});
   </insert>
           	

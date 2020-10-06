@@ -8,6 +8,7 @@ target
 
 # IntelliJ files
 .idea/
+.idea
 *.iml
 
 # Eclipse files

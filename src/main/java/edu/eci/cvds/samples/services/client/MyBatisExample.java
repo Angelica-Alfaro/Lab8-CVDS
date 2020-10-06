@@ -28,11 +28,22 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
+import edu.eci.cvds.sampleprj.dao.ClienteDAO;
+import edu.eci.cvds.sampleprj.dao.mybatis.MyBATISClienteDAO;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.TipoItemMapper;
+import edu.eci.cvds.samples.entities.Cliente;
 import edu.eci.cvds.samples.entities.Item;
 import edu.eci.cvds.samples.entities.TipoItem;
+import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
+import edu.eci.cvds.samples.services.ServiciosAlquiler;
+import edu.eci.cvds.samples.services.ServiciosAlquilerFactory;
+import edu.eci.cvds.samples.services.impl.ServiciosAlquilerImpl;
+import edu.eci.cvds.samples.services.impl.ServiciosAlquilerItemsStub;
 
 /**
  *
@@ -59,20 +70,16 @@ public class MyBatisExample {
         }
         return sqlSessionFactory;
     }
-
+    
     /**
-     * Programa principal de ejempo de uso de MyBATIS
-     * @param args
+     * Programa que prueba sentencias SQL (mappers)
      * @throws SQLException 
      */
-    public static void main(String args[]) throws SQLException {
-        SqlSessionFactory sessionfact = getSqlSessionFactory();
-
+    public static void usingSQL() throws SQLException{
+    	SqlSessionFactory sessionfact = getSqlSessionFactory();
         SqlSession sqlss = sessionfact.openSession();
 
-        //Crear el mapper y usarlo:
-        
-                   
+        //Sentencias SQL usando mappers
         System.out.println("+++++++++++++++++++++++");
         System.out.println("+++++++++++++++++++++++");
         System.out.println("1. Consultas CLIENTE:");
@@ -80,7 +87,7 @@ public class MyBatisExample {
         System.out.println("-----------------------");
         System.out.println("1.1 Consulta de todos los CLIENTEs:");
         ClienteMapper cm=sqlss.getMapper(ClienteMapper.class);
-       // System.out.println(cm.consultarClientes()); 
+        //System.out.println(cm.consultarClientes()); 
         System.out.println("-----------------------");
         System.out.println("-----------------------");
         System.out.println("1.2 Consulta de CLIENTES ESPECIFICOS:");
@@ -95,9 +102,8 @@ public class MyBatisExample {
         //cm.agregarItemRentadoACliente(2154421,93 , fechai,fechaf);
         //cm.agregarItemRentadoACliente(2154422,92 , fechai,fechaf);
 
-
                  
-        System.out.println("+++++++++++++++++++++++");
+        /*System.out.println("+++++++++++++++++++++++");
         System.out.println("+++++++++++++++++++++++");
         System.out.println("Consultas ITEM:");
         System.out.println("-----------------------");
@@ -113,7 +119,7 @@ public class MyBatisExample {
         System.out.println(im.consultarItem(92));
         System.out.println("-----------------------");
         System.out.println("-----------------------");
-        System.out.println(im.consultarItem(93));
+        System.out.println(im.consultarItem(93));*/
     
         //Date fechal = new Date(120, 11, 24);
         //TipoItem tipo1 = new TipoItem(90, "Aventura");
@@ -130,4 +136,27 @@ public class MyBatisExample {
         
         sqlss.close();
     }
+    
+    /**
+     * Programa que prueba la capa lógica
+     * @throws ExcepcionServiciosAlquiler 
+     */
+    public static void usingLogicMode() throws ExcepcionServiciosAlquiler {
+        
+        ServiciosAlquiler servicio = ServiciosAlquilerFactory.getInstance().getServiciosAlquiler();
+        System.out.println(servicio.consultarCliente(2154421));
+    }
+    
+    /**
+     * Programa principal de ejempo de uso de MyBATIS
+     * @param args
+     * @throws SQLException 
+     * @throws ExcepcionServiciosAlquiler 
+     */
+    public static void main(String args[]) throws  SQLException, ExcepcionServiciosAlquiler {
+        
+    	usingLogicMode();
+    	//usingSQL();
+    }
+    
 }

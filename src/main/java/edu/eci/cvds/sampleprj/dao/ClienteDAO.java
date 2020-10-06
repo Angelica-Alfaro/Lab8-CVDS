@@ -1,5 +1,12 @@
 package edu.eci.cvds.sampleprj.dao;
 
-public interface ClienteDAO {
+import java.util.Date;
 
+import edu.eci.cvds.samples.entities.Cliente;
+
+public interface ClienteDAO {
+	
+	//public void save(int id, int idit, Date fechainicio, Date fechafin) throws PersistenceException;
+	
+	public Cliente load(long documento) throws PersistenceException;
 }
