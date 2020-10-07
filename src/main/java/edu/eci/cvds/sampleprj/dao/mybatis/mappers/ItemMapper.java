@@ -13,7 +13,7 @@ import edu.eci.cvds.samples.entities.Item;
  */
 public interface ItemMapper {
     
-    
+  
     public List<Item> consultarItems();        
     
     public Item consultarItem(@Param("itemId")int id);

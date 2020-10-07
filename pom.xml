@@ -20,13 +20,11 @@
             <artifactId>junit</artifactId>
             <version>4.11</version>
         </dependency>
-
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
             <version>3.4.5</version>
         </dependency>
-
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -37,23 +35,113 @@
             <artifactId>h2</artifactId>
             <version>1.4.191</version>
         </dependency>
+    	<dependency>
+      		<groupId>javax</groupId>
+      		<artifactId>javaee-web-api</artifactId>
+      		<version>7.0</version>
+      		<scope>provided</scope>
+    	</dependency>
+    	<dependency>
+      		<groupId>javax</groupId>
+      		<artifactId>javaee-api</artifactId>
+      		<version>8.0.1</version>
+      		<scope>provided</scope>
+    	</dependency>
+    	<dependency>
+      		<groupId>com.sun.faces</groupId>
+      		<artifactId>jsf-api</artifactId>
+      		<version>2.2.20</version>
+    	</dependency>
+    	<dependency>
+     		<groupId>com.sun.faces</groupId>
+      		<artifactId>jsf-impl</artifactId>
+      		<version>2.2.20</version>
+    	</dependency>
+    	<dependency>
+      		<groupId>javax.servlet</groupId>
+      		<artifactId>jstl</artifactId>
+      		<version>1.2</version>
+    	</dependency>
+    	<dependency>
+      		<groupId>org.primefaces</groupId>
+      		<artifactId>primefaces</artifactId>
+      		<version>8.0</version>
+    	</dependency>
+    	<dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>4.0</version>
+        </dependency>
     </dependencies>
     
     <build>
-        <plugins>
-            <!-- clean project (also local H2 database)-->
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.6.1</version>
-                <executions>
-                    <execution>
-                        <id>auto-clean</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>clean</goal>
+    <finalName>PrimeFaces</finalName>
+       <plugins>
+       <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-compiler-plugin</artifactId>
+           <version>3.8.0</version>
+           <configuration>
+               <source>1.8</source>
+               <target>1.8</target>
+           </configuration>
+       </plugin>
+       <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-war-plugin</artifactId>
+           <version>2.3</version>
+           <configuration>
+               <failOnMissingWebXml>false</failOnMissingWebXml>
+           </configuration>
+       </plugin>
+       <!-- Plugin configuration for Heroku compatibility. -->
+       <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-dependency-plugin</artifactId>
+           <version>2.1</version>
+           <executions>
+               <execution>
+                   <phase>package</phase>
+                   <goals>
+                       <goal>copy</goal>
+                   </goals>
+                   <configuration>
+                       <artifactItems>
+                           <artifactItem>
+                               <groupId>com.github.jsimone</groupId>
+                               <artifactId>webapp-runner</artifactId>
+                               <version>8.0.30.2</version>
+                               <destFileName>webapp-runner.jar</destFileName>
+                           </artifactItem>
+                       </artifactItems>
+                   </configuration>
+               </execution>
+           </executions>
+       </plugin>
+
+       <!-- Tomcat embedded plugin. -->
+       <plugin>
+           <groupId>org.apache.tomcat.maven</groupId>
+           <artifactId>tomcat7-maven-plugin</artifactId>
+           <version>2.2</version>
+           <configuration>
+               <port>8080</port>
+               <path>/</path>
+           </configuration>
+       </plugin>
+       <!-- clean project (also local H2 database)-->
+        <plugin>
+        	<artifactId>maven-clean-plugin</artifactId>
+            <version>2.6.1</version>
+            <executions>
+            	<execution>
+                	<id>auto-clean</id>
+                    <phase>initialize</phase>
+                    <goals>
+                     	<goal>clean</goal>
                         </goals>
-                    </execution>
-                </executions>
+                </execution>
+            </executions>
             </plugin>
             
             <!-- create local H2 database -->
@@ -91,11 +179,9 @@
                     </execution>
                 </executions>
             </plugin>
-        </plugins>
-    </build>
-        
-    
-    
+	</plugins>
+</build>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
