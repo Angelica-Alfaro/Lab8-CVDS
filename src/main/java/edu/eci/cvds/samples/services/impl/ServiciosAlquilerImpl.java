@@ -13,6 +13,7 @@ import edu.eci.cvds.samples.entities.TipoItem;
 import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.cvds.samples.services.ServiciosAlquiler;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Singleton
@@ -23,6 +24,9 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
    
    @Inject
    private ClienteDAO clienteDAO;
+   
+   @Inject
+   private TipoItemDAO tipoItemDAO;
    
    @Override
    public int valorMultaRetrasoxDia(int itemId) {
@@ -40,12 +44,22 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
    
    @Override
    public List<ItemRentado> consultarItemsCliente(long idcliente) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+	   Cliente cliente = consultarCliente(idcliente);
+       if (cliente==null) {
+    	   throw new ExcepcionServiciosAlquiler("El cliente no esta registrado");
+       }
+       else {
+    	   return consultarCliente(idcliente).getRentados();
+       }
    }
 
    @Override
    public List<Cliente> consultarClientes() throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+	   try {
+           return clienteDAO.load();
+       } catch (PersistenceException ex) {
+           throw new ExcepcionServiciosAlquiler("Error al consultar los clientes ",ex);
+       }
    }
 
    @Override
@@ -79,7 +93,13 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
 
    @Override
    public void registrarAlquilerCliente(Date date, long docu, Item item, int numdias) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+	   LocalDate actual=date.toLocalDate();
+       LocalDate entrega=actual.plusDays(numdias);
+	   try {
+           clienteDAO.registrarAlquiler(docu,item.getId(),date,java.sql.Date.valueOf(entrega));
+       } catch (PersistenceException ex) {
+           throw new ExcepcionServiciosAlquiler("Error al consultar el item ",ex);
+       }
    }
 
    @Override
