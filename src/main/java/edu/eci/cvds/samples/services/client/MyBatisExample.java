@@ -78,7 +78,7 @@ public class MyBatisExample {
         
         
         //System.out.println(cm.consultarCliente(1));
-        //cm.agregarItemRentadoACliente(1500, 90, dateFormat.parse("2020-09-20"), dateFormat.parse("2021-08-26"));
+        //cm.agregarItemRentadoACliente(3, 2, dateFormat.parse("2020-09-20"), dateFormat.parse("2021-08-26"));
         //ItemMapper im= sqlss.getMapper(ItemMapper.class);-
         //Item it = new Item(new TipoItem(2,"Accion"),2025,"Cr7","Historia de Cristiano Ronaldo",dateFormat.parse("2024-07-25"),5000, "Compra","Deportivo");-
         //im.insertarItem(it);-

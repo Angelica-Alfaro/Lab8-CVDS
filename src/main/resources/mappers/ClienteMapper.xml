@@ -51,7 +51,11 @@
 </select>
 
 <insert parameterType="map" id="agregarItemRentadoACliente">
-	INSERT INTO VI_ITEMRENTADO VALUES (#{idIr}, #{iditIr},#{fechainicioIr}, #{fechafinIr})
+	INSERT INTO VI_ITEMRENTADO (CLIENTES_documento, ITEMS_id, fechainiciorenta, fechafinrenta) VALUES (#{idIr}, #{iditIr},#{fechainicioIr}, #{fechafinIr})
+</insert>
+
+<insert parameterType="map" id="insertarCliente">
+	INSERT INTO VI_CLIENTES (documento,nombre,telefono,direccion,email,vetado) VALUES (#{cliente.documento},#{cliente.nombre},#{cliente.telefono},#{cliente.direccion},#{cliente.email},#{cliente.vetado});
 </insert>
 
 </mapper>

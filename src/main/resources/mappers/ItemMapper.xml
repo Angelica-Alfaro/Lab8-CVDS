@@ -29,14 +29,14 @@
        
     ti.id as id_tipoItem,
     ti.descripcion 
-
-    FROM  
-    left join VI_ITEMS as i on ir.ITEMS_id=i.id 
-    left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id
+    
+    FROM VI_ITEMS as i
+    left join  VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id
+    
 </select>
 
 <insert parameterType="map" id="insertarItem">
-	INSERT INTO VI_ITEMS VALUES(#{itemI.id}, #{itemI.nombre}, #{itemI.descripcion}, #{itemI.fechaLanzamiento}, #{itemI.tarifaxDia}, #{itemI.formatoRenta}, #{itemI.genero}, #{itemI.tipo.id});
+	INSERT INTO VI_ITEMS (id,nombre,descripcion,fechalanzamiento,tarifaxdia,formatorenta,genero,TIPOITEM_id) VALUES(#{itemI.id}, #{itemI.nombre}, #{itemI.descripcion}, #{itemI.fechaLanzamiento}, #{itemI.tarifaxDia}, #{itemI.formatoRenta}, #{itemI.genero}, #{itemI.tipo.id});
 </insert>
 
 <select parameterType="map" id="consultarItem" resultMap="ItemResult">
@@ -53,9 +53,8 @@
     ti.id as id_tipoItem,
     ti.descripcion 
 
-    FROM 
-    left join VI_ITEMS as i on ir.ITEMS_id=i.id 
-    left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id
+    FROM VI_ITEMS as i
+    left join  VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id
 	
 	WHERE
 	i.id = #{itemId}

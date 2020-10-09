@@ -27,6 +27,8 @@ public interface ClienteMapper {
      * Consultar todos los clientes
      * @return 
      */
+    public void insertarCliente(@Param("cliente") Cliente cliente);
+    
     public List<Cliente> consultarClientes();
     
 }
