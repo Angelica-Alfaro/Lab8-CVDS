@@ -31,5 +31,14 @@ public interface ClienteMapper {
      * @return 
      */
     public List<Cliente> consultarClientes();
+
+    /**
+     * Registrar un cliente
+     * @return 
+     */
+	public void insertarCliente(@Param("cliente") Cliente c);
+
+
+	public void vetarCliente(@Param("idcli")int id,@Param("estado") boolean vetado);
     
 }

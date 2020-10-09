@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper">
+  <mapper namespace="edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper">
 
   <resultMap type='Cliente' id='ClienteResult'>
     <id property='documento' column='documento' />
@@ -51,7 +51,7 @@
       left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id
   </select>
 
-<select parameterType="map" id="consultarCliente" resultMap="ClienteResult">
+  <select parameterType="map" id="consultarCliente" resultMap="ClienteResult">
     SELECT  
       c.nombre,
       c.documento,
@@ -82,11 +82,22 @@
         WHERE c.documento = #{idcli}
     </if>
   </select>
+  
+  <update parameterType="map" id="vetarCliente">
+  	UPDATE VI_CLIENTES 
+    SET vetado = #{estado}
+    WHERE documento = #{idcli}
+  </update>
 
   <insert parameterType="map" id="agregarItemRentadoACliente">
     INSERT INTO
     VI_ITEMRENTADO (CLIENTES_documento, ITEMS_id, fechainiciorenta, fechafinrenta) 
     VALUES ( #{idcli}, #{idit}, #{fechainicio}, #{fechafin});
+  </insert>
+  
+  <insert parameterType="map" id="insertarCliente">
+    INSERT INTO VI_CLIENTES (documento,nombre,telefono,direccion,email,vetado)
+	VALUES ( #{cliente.documento}, #{cliente.nombre}, #{cliente.telefono}, #{cliente.direccion}, #{cliente.email}, #{cliente.vetado});
   </insert>
           	
 </mapper>

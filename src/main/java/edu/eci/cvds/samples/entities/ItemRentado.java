@@ -64,7 +64,7 @@ public class ItemRentado implements Serializable {
 
     @Override
     public String toString() {
-        return "ItemRentado: " + "id: " + id + ", item: " + item + ", fechainiciorenta: " + fechainiciorenta + ", fechafinrenta: " + fechafinrenta + '}';
+        return "ItemRentado: " + "id: " + id + ", item: " + item + ", fechainiciorenta: " + fechainiciorenta + ", fechafinrenta: " + fechafinrenta ;
     }
 
     

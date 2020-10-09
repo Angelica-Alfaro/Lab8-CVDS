@@ -78,9 +78,16 @@ public class MyBatisExample {
     public static void usingSQL() throws SQLException{
     	SqlSessionFactory sessionfact = getSqlSessionFactory();
         SqlSession sqlss = sessionfact.openSession();
-
+        
+        /*System.out.println("1. Insertar CLIENTE:");
+        ClienteMapper c = sqlss.getMapper(ClienteMapper.class);
+        Cliente cl = new Cliente("Indiana", 1110112, "312312312", "calle 100", "Indiana@gmail.com", false, null);
+        c.insertarCliente(cl);*/
+        
+        ClienteMapper cm=sqlss.getMapper(ClienteMapper.class);
+        cm.vetarCliente(2158119, true);
         //Sentencias SQL usando mappers
-        System.out.println("+++++++++++++++++++++++");
+        /*System.out.println("+++++++++++++++++++++++");
         System.out.println("+++++++++++++++++++++++");
         System.out.println("1. Consultas CLIENTE:");
         System.out.println("-----------------------");
@@ -94,7 +101,7 @@ public class MyBatisExample {
         System.out.println(cm.consultarCliente(2154421));
         System.out.println("-----------------------");
         System.out.println("-----------------------");
-        System.out.println(cm.consultarCliente(2154422));
+        System.out.println(cm.consultarCliente(2154422));*/
         
         //System.out.println("1.1 INSERT ItemRentadoACliente:");
         //Date fechai = new Date(120, 11, 24);
@@ -144,7 +151,13 @@ public class MyBatisExample {
     public static void usingLogicMode() throws ExcepcionServiciosAlquiler {
         
         ServiciosAlquiler servicio = ServiciosAlquilerFactory.getInstance().getServiciosAlquiler();
-        System.out.println(servicio.consultarCliente(2154421));
+        servicio.vetarCliente(2158119, true);
+        //Cliente p = new Cliente("Gaby", 1110114, "311234567", "calle 200", "bela@gmail.com", false, null);
+        //Cliente p = new Cliente("Lola", 1110118, "311234567", "calle 200", "lala@gmail.com", false, null);
+		
+        //servicio.registrarCliente(p);
+        //System.out.println(servicio.consultarCliente(2154421));
+        //System.out.println(servicio.consultarCliente(1110112));
     }
     
     /**
