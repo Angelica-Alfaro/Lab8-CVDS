@@ -16,9 +16,6 @@ import edu.eci.cvds.samples.entities.Item;
 import edu.eci.cvds.samples.entities.ItemRentado;
 import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
 
-import java.sql.SQLException;
-import java.util.List;
-
 public class MyBATISItemRentadoDAO implements ItemRentadoDAO {
     @Inject
     private ItemRentadoMapper itemRentadoMapper;
