@@ -1,5 +1,6 @@
 package edu.eci.cvds.samples.services;
 
+import edu.eci.cvds.sampleprj.dao.PersistenceException;
 import edu.eci.cvds.samples.entities.Cliente;
 import edu.eci.cvds.samples.entities.Item;
 import edu.eci.cvds.samples.entities.ItemRentado;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public interface ServiciosAlquiler {
 
-   public abstract int valorMultaRetrasoxDia(int itemId);
+   public abstract int valorMultaRetrasoxDia(int itemId) throws PersistenceException;
 
    public abstract Cliente consultarCliente(long docu) throws ExcepcionServiciosAlquiler;
 
@@ -51,7 +52,7 @@ public interface ServiciosAlquiler {
    /**
    * @obj registrar el alquiler de un item
    * @pre numdias >=1
-   * @param date fecha de rejistro del alquiler
+   * @param date fecha de registro del alquiler
    * @param docu identificacion de a quien se le cargara el alquiler
    * @param item el identificador del item a alquilar
    * @param numdias el numero de dias que se le prestara el item
@@ -72,8 +73,9 @@ public interface ServiciosAlquiler {
    * @return el costo total del alquiler, teniendo en cuesta el costo diario y
    * el numeo de dias del alquiler
    * @throws ExcepcionServiciosAlquiler si el identificador del item no existe
+ * @throws PersistenceException 
    */
-   public abstract long consultarCostoAlquiler(int iditem, int numdias) throws ExcepcionServiciosAlquiler;
+   public abstract long consultarCostoAlquiler(int iditem, int numdias) throws ExcepcionServiciosAlquiler, PersistenceException;
 
    public abstract void actualizarTarifaItem(int id, long tarifa) throws ExcepcionServiciosAlquiler;
 

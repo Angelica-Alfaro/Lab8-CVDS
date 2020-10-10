@@ -83,6 +83,27 @@
     </if>
   </select>
   
+  <select parameterType="map" id="consultarItemsCliente" resultMap="ClienteResult">
+    SELECT  
+      c.nombre,
+      c.documento,
+      ir.id as iren_id ,
+      i.nombre as iren_item_nombre,
+      i.descripcion as iren_item_descripcion,
+      i.fechalanzamiento as iren_item_fechalanzamiento,
+      i.tarifaxdia as iren_item_tarifaxdia,
+      i.formatorenta as iren_item_formatorenta,
+      i.genero as iren_item_genero,
+      
+      ir.fechainiciorenta as iren_fechainiciorenta ,
+      ir.fechafinrenta as iren_fechafinrenta
+      
+    FROM 
+      VI_CLIENTES as c left join VI_ITEMRENTADO as ir on c.documento=ir.CLIENTES_documento
+      left join VI_ITEMS as i on ir.ITEMS_id=i.id 
+      where c.documento = #{idcli} AND CURDATE() BETWEEN ir.fechainiciorenta AND ir.fechafinrenta  
+  </select>
+  
   <update parameterType="map" id="vetarCliente">
   	UPDATE VI_CLIENTES 
     SET vetado = #{estado}

@@ -45,14 +45,34 @@
         i.formatorenta,
         i.genero, 
                 
-         ti.id as tipo_id,
-         ti.descripcion as tipo_descripcion
+        ti.id as tipo_id,
+        ti.descripcion as tipo_descripcion
 
     FROM VI_ITEMS AS i
     LEFT JOIN VI_TIPOITEM AS ti ON i.TIPOITEM_id = ti.id
     <if test="idit !=null">
         WHERE i.id = #{idit}
     </if>
+  </select>
+  
+  <select parameterType="map" id="consultarItemsDisponibles" resultMap="ItemResult">
+	SELECT
+	    	i.id,
+	        i.nombre,
+	        i.descripcion,
+	        i.fechalanzamiento,
+	        i.tarifaxdia,
+	        i.formatorenta,
+	        i.genero, 
+	                
+	        ti.id as tipo_id,
+	        ti.descripcion as tipo_descripcion
+	FROM VI_ITEMS i
+	LEFT JOIN VI_TIPOITEM AS ti ON i.TIPOITEM_id = ti.id
+	WHERE NOT EXISTS (SELECT NULL
+	                 FROM VI_ITEMRENTADO ti
+	                WHERE ti.ITEMS_id = i.id AND ti.fechafinrenta >= CURDATE())
+
   </select>
 
   <insert parameterType="map" id="insertarItem">

@@ -6,6 +6,7 @@ import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import edu.eci.cvds.sampleprj.dao.ClienteDAO;
 import edu.eci.cvds.sampleprj.dao.ItemDAO;
+import edu.eci.cvds.sampleprj.dao.ItemRentadoDAO;
 import edu.eci.cvds.sampleprj.dao.PersistenceException;
 import edu.eci.cvds.samples.entities.Cliente;
 import edu.eci.cvds.samples.entities.Item;
@@ -24,11 +25,14 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
    private ItemDAO itemDAO;
    
    @Inject
+   private ItemRentadoDAO itemRentadoDAO;
+   
+   @Inject
    private ClienteDAO clienteDAO;
 
    @Override
-   public int valorMultaRetrasoxDia(int itemId) {
-       throw new UnsupportedOperationException("Not supported yet.");
+   public int valorMultaRetrasoxDia(int itemId) throws PersistenceException {
+       return itemDAO.valorMultaXDia(itemId);
    }
 
    @Override
@@ -42,7 +46,11 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
 
    @Override
    public List<ItemRentado> consultarItemsCliente(long idcliente) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+	   try {
+           return clienteDAO.consultarItemsCliente(idcliente);
+       } catch (PersistenceException ex) {
+    	   throw new ExcepcionServiciosAlquiler("Error al consultar el cliente "+idcliente,ex);
+       }
    }
 
    @Override
@@ -88,8 +96,8 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
    }
 
    @Override
-   public void registrarAlquilerCliente(Date date, long docu, Item item, int numdias) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+   public void registrarAlquilerCliente(Date date, long docu, Item item, int numdias) throws ExcepcionServiciosAlquiler { 
+	   itemRentadoDAO.registrarAlquilerCliente(docu, item, date, numdias);
    }
 
    @Override
@@ -102,8 +110,8 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
    }
 
    @Override
-   public long consultarCostoAlquiler(int iditem, int numdias) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+   public long consultarCostoAlquiler(int iditem, int numdias) throws ExcepcionServiciosAlquiler, PersistenceException {
+	   return itemDAO.costoAlquiler(iditem, numdias);
    }
 
    @Override

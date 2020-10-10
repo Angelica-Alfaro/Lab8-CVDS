@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -151,10 +152,15 @@ public class MyBatisExample {
     public static void usingLogicMode() throws ExcepcionServiciosAlquiler {
         
         ServiciosAlquiler servicio = ServiciosAlquilerFactory.getInstance().getServiciosAlquiler();
-        servicio.vetarCliente(2158119, true);
+        //servicio.vetarCliente(2158119, true);
         //Cliente p = new Cliente("Gaby", 1110114, "311234567", "calle 200", "bela@gmail.com", false, null);
         //Cliente p = new Cliente("Lola", 1110118, "311234567", "calle 200", "lala@gmail.com", false, null);
-		
+        List<Item> itDis = servicio.consultarItemsDisponibles();
+	    Item it = servicio.consultarItem(10);
+	    
+        java.sql.Date fecharegistro = java.sql.Date.valueOf("2020-10-09");
+        servicio.registrarAlquilerCliente(fecharegistro, 2158119, it,5);
+    	
         //servicio.registrarCliente(p);
         //System.out.println(servicio.consultarCliente(2154421));
         //System.out.println(servicio.consultarCliente(1110112));

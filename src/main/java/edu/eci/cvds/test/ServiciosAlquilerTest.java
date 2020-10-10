@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.lang.AssertionError;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 import com.google.inject.Inject;
 import edu.eci.cvds.sampleprj.dao.PersistenceException;
@@ -160,6 +162,8 @@ public class ServiciosAlquilerTest {
     @Test
     public void validConsultarItemsDisponibles() {
     	try {
+    		
+    		
 			List<Item> items = serviciosAlquiler.consultarItemsDisponibles();
 			Assert.assertTrue(items.size() > 0);
 	    	
@@ -179,4 +183,39 @@ public class ServiciosAlquilerTest {
 			Assert.assertFalse(false);
 		}
     }
+    
+    @Test
+    public void validRegistrarAlquiler() {
+    	try { 
+    		//Se busca el item disponible
+            Date fecharegistro = java.sql.Date.valueOf("2020-10-10");
+    	    List<Item> itDis = serviciosAlquiler.consultarItemsDisponibles();
+    	    Item it = itDis.get(0);
+    	    //Se alquila
+    	    Cliente cl = serviciosAlquiler.consultarCliente(2158119);
+    	    serviciosAlquiler.registrarAlquilerCliente(fecharegistro, cl.getDocumento(), it, 10);
+	    	
+		} catch (ExcepcionServiciosAlquiler e) {
+			Assert.assertFalse(false);
+		}
+    }
+    
+    @Test
+    public void registrarAlquilerSinItem() {
+    	boolean r = false;
+    	try { 
+    		//Crea item
+    		Date fecharegistro = java.sql.Date.valueOf("2020-10-11");
+            Date fecha = java.sql.Date.valueOf("2020-10-10");
+    	    TipoItem tipo2 = new TipoItem(91, "Belico");
+    	    Item item = new Item(tipo2, 16  , "pororo" , "serie", fecha, 140, "dvd", "Belico");
+    	    
+    	    serviciosAlquiler.registrarAlquilerCliente(fecharegistro, 2158119, item, 15);
+	    	
+		} catch ( ExcepcionServiciosAlquiler e) {
+			r = true;
+		}
+    	Assert.assertTrue(r);
+    }
+    
 }

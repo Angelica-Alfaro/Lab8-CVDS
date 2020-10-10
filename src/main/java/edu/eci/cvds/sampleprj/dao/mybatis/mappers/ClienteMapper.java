@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import edu.eci.cvds.samples.entities.Cliente;
 import edu.eci.cvds.samples.entities.Item;
+import edu.eci.cvds.samples.entities.ItemRentado;
 
 /**
  *
@@ -40,5 +41,10 @@ public interface ClienteMapper {
 
 
 	public void vetarCliente(@Param("idcli")int id,@Param("estado") boolean vetado);
+
+
+	public List<ItemRentado> consultarItemsCliente(@Param("idcli")long idcliente);
+	
+	public int valorMultaRetrasoxDia(@Param("idItem")int itemId);
     
 }

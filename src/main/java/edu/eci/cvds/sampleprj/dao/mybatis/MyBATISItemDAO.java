@@ -17,6 +17,8 @@ public class MyBATISItemDAO implements ItemDAO{
 	  @Inject
 	  private ItemMapper itemMapper;    
 	  
+	  private Item it;
+	  
 	  @Override
 	  @Transactional
 	  public void save(Item it) throws PersistenceException{
@@ -42,11 +44,23 @@ public class MyBATISItemDAO implements ItemDAO{
 	  @Override
 	  public List<Item> consultarItemsDisponibles() throws PersistenceException {
 		  try{
-			      return itemMapper.consultarItems();
+			      return itemMapper.consultarItemsDisponibles();
 		  }
 		  catch(org.apache.ibatis.exceptions.PersistenceException e){
 			  throw new PersistenceException("Error al registrar los items ",e);
 		  } 
 	  }
+
+	@Override
+	public int valorMultaXDia(int itemId) throws PersistenceException {
+		it = load(itemId);
+        return (int) it.getTarifaxDia();
+	}
+
+	@Override
+	public long costoAlquiler(int iditem, int numdias) throws PersistenceException {
+		it = load(iditem);
+        return it.getTarifaxDia() * numdias;
+	}
 
 }

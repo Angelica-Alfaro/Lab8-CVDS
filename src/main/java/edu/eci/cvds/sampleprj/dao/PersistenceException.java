@@ -5,4 +5,5 @@ public class PersistenceException extends Exception{
 	public PersistenceException (String mensaje, org.apache.ibatis.exceptions.PersistenceException e) {
 		super(mensaje);
 	}
+	
 }
