@@ -22,29 +22,34 @@
     </h:form>
     
     <h:form>
-    <p:dataTable var="item" value="#{AlquilerItemsBean.consultaClientes()}" rows="5"
+    <p:dataTable var="item" value="#{AlquilerItemsBean.getclienteUsado().rentados}" rows="5"
                  paginator="true"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}{RowsPerPageDropdown}"
                  rowsPerPageTemplate="5,10,15">
 
-        <f:facet name="header">
-            Clientes:
-        </f:facet>
     
         <p:column headerText="nombre">
-            <h:outputText value="#{item.nombre}" />
+            <h:outputText value="#{AlquilerItemsBean.item.nombre}" />
         </p:column>
- 
-        <p:column headerText="documento">
-            <h:outputText value="#{item.documento}" />
+        
+        <p:column headerText="descripcion">
+            <h:outputText value="#{AlquilerItemsBean.item.descripcion}" />
         </p:column>
 
-        <p:column headerText="telefono">
-            <h:outputText value="#{item.telefono}" />
+        <p:column headerText="tarifa">
+            <h:outputText value="#{AlquilerItemsBean.item.tarifaxDia}" />
         </p:column>
- 
-        <p:column headerText="direccion">
-            <h:outputText value="#{item.direccion}" />
+
+        <p:column headerText="Fecha de inicio renta">
+            <h:outputText value="#{item.fechainiciorenta}" />
+        </p:column>
+
+        <p:column headerText="Fecha de fin de renta">
+            <h:outputText value="#{item.fechafinrenta}" />
+        </p:column>
+
+        <p:column headerText="multa">
+            <h:outputText value="#{AlquilerItemsBean.consultarmulta(AlquilerItemsBean.item.id)}" />
         </p:column>
         
     </p:dataTable>
@@ -54,14 +59,14 @@
     <h3 style="color:black;text-align:center"> </h3>
 
     
-    <p:panelGrid columns="5" style="max-width:500px;margin-left:auto;margin-right:auto; background-color: #3CBC8D">
-				<p:inputText style="font-weight:bold " width="50%" id="Nombre" placeholder="Nombre: " type="String" value="#{nombre}"/>
-				<p:inputText style="font-weight:bold " width="50%" id="Documento" placeholder="Documento: " type="long" value="#{documento}" />
-				<p:inputText style="font-weight:bold " width="50%" id="Telefono" placeholder="Telefono: " type="String" value="#{telefono}" />
-    </p:panelGrid>
+    <p:panelGrid columns="2" style="max-width:500px;margin-left:auto;margin-right:auto; background-color: #3CBC8D">
+				<p:inputText style="font-weight:bold " width="50%" id="Item" placeholder="Item: " type="int" value="#{itemRegistrado}"/>
+				<p:inputText style="font-weight:bold " width="50%" id="Dias" placeholder="Dias: " type="int" value="#{dias}" />
+
+            </p:panelGrid>
 
     <p:panelGrid columns="1" style="max-width:500px;margin-left:auto;margin-right:auto;">
-				<p:commandButton align="center" style="background-color: #3CBC8D" value="registrar" class="Button" action="registrocliente?faces-redirect = true" actionListener="#{AlquilerItemsBean.registrarCliente(nombre, documento, telefono, direccion, email)}"/>
+				<p:commandButton align="center" style="background-color: #3CBC8D" value="registrar" class="Button" action="registrocliente?faces-redirect = true" actionListener="#{AlquilerItemsBean.RegistrarItems(itemRegistrado, dias)}"/>
 	</p:panelGrid>
 
     </h:form>

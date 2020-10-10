@@ -50,7 +50,13 @@
         <p:column headerText="email">
             <h:outputText value="#{cliente.email}" />
         </p:column> 
+        <p:column headerText="Items">
+            <h:commandLink action="registrocliente?faces-redirect = true" value="Items">
+                <f:setPropertyActionListener value="#{cliente}" target="#{AlquilerItemsBean.clienteUsado}"/>
+            </h:commandLink>
+        </p:column>
     </p:dataTable>
+    
 
     <h2 style="color:black;text-align:center">Registrar Cliente</h2>
     <h3 style="color:black;text-align:center"> </h3>
