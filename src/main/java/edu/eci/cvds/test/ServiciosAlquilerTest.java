@@ -1,21 +1,12 @@
 package edu.eci.cvds.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.lang.AssertionError;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 
 import com.google.inject.Inject;
-import edu.eci.cvds.sampleprj.dao.PersistenceException;
-import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import edu.eci.cvds.samples.entities.Cliente;
 import edu.eci.cvds.samples.entities.Item;
-import edu.eci.cvds.samples.entities.ItemRentado;
 import edu.eci.cvds.samples.entities.TipoItem;
 import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.cvds.samples.services.ServiciosAlquiler;
