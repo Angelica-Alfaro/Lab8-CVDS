@@ -51,9 +51,9 @@
             <h:outputText value="#{cliente.email}" />
         </p:column> 
         <p:column headerText="Items">
-            <h:commandLink action="registrocliente?faces-redirect = true" value="Items">
+            <h:commandLink action="registroalquiler?faces-redirect = true" value="Items">
                 <f:setPropertyActionListener value="#{cliente}" target="#{AlquilerItemsBean.clienteUsado}"/>
-            </h:commandLink>
+           </h:commandLink>
         </p:column>
     </p:dataTable>
     

@@ -24,6 +24,7 @@ public class RegistroClientesBean extends BasePageBean{
 
     @Inject
     private ServiciosAlquiler servicios;
+    @Inject
     private Cliente clienteUsado;
 
     public Cliente consultarCliente (long docu){
@@ -58,9 +59,7 @@ public class RegistroClientesBean extends BasePageBean{
                 return items;
             }
 
-    public Cliente getclienteUsado(){
-        return clienteUsado;
-    }
+    
     public void RegistrarItems(int itemRegistrado, int dias){
             try{
                 Date fecha = new Date(System.currentTimeMillis()); 
@@ -75,6 +74,15 @@ public class RegistroClientesBean extends BasePageBean{
                         servicios.consultarMultaAlquiler(iditem, fecha);
                         }catch(ExcepcionServiciosAlquiler excepcionServiciosAlquiler){}           
                         }
+                        
+    public Cliente getclienteUsado(){
+        return clienteUsado;
+    }
+
+    public void setclienteUsado(Cliente usado){
+        this.clienteUsado=usado;
+
+    }
 
 }
 
