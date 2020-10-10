@@ -59,7 +59,17 @@ public class RegistroClientesBean extends BasePageBean{
                 return items;
             }
 
+            public Long consultarItem (int id){
+                try{
+                        item = servicios.consultarItem(id);
+                        precio=item.getTarifaxDia();
+                        }catch(ExcepcionServiciosAlquiler excepcionServiciosAlquiler){}
+                        return precio;
+            
+                    }
+
     
+            
     public void RegistrarItems(int itemRegistrado, int dias){
             try{
                 Date fecha = new Date(System.currentTimeMillis()); 
@@ -68,11 +78,12 @@ public class RegistroClientesBean extends BasePageBean{
                 }catch(ExcepcionServiciosAlquiler excepcionServiciosAlquiler){}           
                 }
 
-    public void consultarmulta(int iditem){
+    public long consultarmulta(int iditem){
                     try{
                         Date fecha = new Date(System.currentTimeMillis()); 
-                        servicios.consultarMultaAlquiler(iditem, fecha);
-                        }catch(ExcepcionServiciosAlquiler excepcionServiciosAlquiler){}           
+                        precio=servicios.consultarMultaAlquiler(iditem, fecha);
+                        }catch(ExcepcionServiciosAlquiler excepcionServiciosAlquiler){}  
+                        return precio;         
                         }
                         
     public Cliente getclienteUsado(){
