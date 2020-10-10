@@ -10,6 +10,8 @@ import edu.eci.cvds.sampleprj.dao.ClienteDAO;
 import edu.eci.cvds.sampleprj.dao.ItemDAO;
 import edu.eci.cvds.sampleprj.dao.mybatis.MyBATISClienteDAO;
 import edu.eci.cvds.sampleprj.dao.mybatis.MyBATISItemDAO;
+import edu.eci.cvds.samples.services.ServiciosAlquiler;
+import edu.eci.cvds.samples.services.impl.ServiciosAlquilerImpl;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -32,7 +34,7 @@ public class GuiceContextListener implements ServletContextListener {
                 // TODO Add service class associated to Stub implementation
                 bind(ClienteDAO.class).to(MyBATISClienteDAO.class);
                 bind(ItemDAO.class).to(MyBATISItemDAO.class);
-                
+                bind (ServiciosAlquiler.class).to(ServiciosAlquilerImpl.class);
                 //faltan mas bind
             }
         });

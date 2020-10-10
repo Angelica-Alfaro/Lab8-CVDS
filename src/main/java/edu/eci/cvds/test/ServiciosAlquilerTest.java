@@ -210,6 +210,7 @@ public class ServiciosAlquilerTest {
     	    TipoItem tipo2 = new TipoItem(91, "Belico");
     	    Item item = new Item(tipo2, 16  , "pororo" , "serie", fecha, 140, "dvd", "Belico");
     	    
+    	    //Intenta hacer alquiler
     	    serviciosAlquiler.registrarAlquilerCliente(fecharegistro, 2158119, item, 15);
 	    	
 		} catch ( ExcepcionServiciosAlquiler e) {

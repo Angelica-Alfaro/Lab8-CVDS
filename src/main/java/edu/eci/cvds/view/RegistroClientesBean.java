@@ -54,3 +54,4 @@ public class RegistroClientesBean extends BasePageBean{
 
 
 }
+
