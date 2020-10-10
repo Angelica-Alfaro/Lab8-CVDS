@@ -15,9 +15,8 @@
 	<h:form id="Cliente_Form">
         <p:dataTable var="cliente" value="#{AlquilerItemsBean.consultarClientes()}"
                 paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                     rows="10" selectionMode="single" id="documento" selection="#{AlquilerItemsBean.selectedCliente}"
+                     rows="10" selectionMode="single" id="documento" selection="#{AlquilerBean.selectedCliente}"
                      rowKey="#{cliente.getDocumento()}">
-		<f:facet name="header">Clientes registrados</f:facet>
             <p:column headerText="Documento">
                 <h:outputText value="#{cliente.getDocumento()}" />
             </p:column>
