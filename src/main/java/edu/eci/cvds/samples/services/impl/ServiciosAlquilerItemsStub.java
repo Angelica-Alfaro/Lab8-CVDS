@@ -39,7 +39,7 @@ public class ServiciosAlquilerItemsStub implements ServiciosAlquiler {
    }
 
    @Override
-   public long valorMultaRetrasoxDia(int itemId) {
+   public int valorMultaRetrasoxDia(int itemId) {
        return MULTA_DIARIA;
    }
 

@@ -8,34 +8,36 @@
 	<title>Registro cliente form</title>
 	<link rel="stylesheet"/>
 </h:head>
-<body background="imagenes/accion.jpg">
+<body background="imagenes/accion1.jpg">
 	<center>
-    	<h2><font color="black" face="georgia" size="6">Welcome to video rental </font></h2>
+    	<h2><font color="white" face="georgia" size="6">Welcome to video rental </font></h2>
     	</center>
 	<h:form id="Cliente_Form">
-        <p:dataTable var="cliente" value="#{AlquilerItemsBean.consultarClientes()}"
+        <p:dataTable var="cliente" value="#{AlquilerItemsBean.consultaClientes()}"
                 paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                     rows="10" selectionMode="single" id="documento" selection="#{AlquilerItemsBean.selectedCliente}"
-                     rowKey="#{cliente.getDocumento()}">
+                     rows="10" selectionMode="single" id="documento" selection="#{AlquilerItemsBean.clienteUsado}"
+                     rowKey="#{cliente.documento}">
 		<f:facet name="header">Clientes registrados</f:facet>
             <p:column headerText="Documento">
-                <h:outputText value="#{cliente.getDocumento()}" />
+                <h:outputText value="#{cliente.documento}" />
             </p:column>
             <p:column headerText="Nombre" >
-                <h:outputText value="#{cliente.getNombre()}" />
+                <h:outputText value="#{cliente.nombre}" />
             </p:column>
             <p:column headerText="Telefono">
-                <h:outputText value="#{cliente.getTelefono()}" />
+                <h:outputText value="#{cliente.telefono}" />
             </p:column>
             <p:column headerText="Direccion">
-                <h:outputText value="#{cliente.getDireccion()}" />
+                <h:outputText value="#{cliente.direccion}" />
             </p:column>
             <p:column headerText="Email">
-                <h:outputText value="#{cliente.getEmail()}" />
+                <h:outputText value="#{cliente.email}" />
             </p:column>
-		<f:facet name="footer">
-			<h:commandButton id="clisele"  value="Aceptar" action="registroalquiler?faces-redirect = true"/>
-		</f:facet>
+	    <p:column headerText="Items">
+                <h:commandLink action="registroalquiler?faces-redirect = true" value="Items">
+                    <f:setPropertyActionListener value="#{cliente}" target="#{AlquilerItemsBean.clienteUsado}"/>
+                </h:commandLink>
+            </p:column>
         </p:dataTable>
 	
 	<center>
@@ -56,7 +58,7 @@
             <p:inputText id="Email" type="String" binding="#{mail}"/>
         </h:panelGrid>
 		<div class="divButton">
-			<p:commandButton update="Cliente_Form" class="Button" actionListener="#{AlquilerItemsBean.registrarCliente(doc.value,name.value,tele.value,dir.value,mail.value)}" value="Registrar Cliente"/>
+			<p:commandButton update="Cliente_Form" class="Button" actionListener="#{AlquilerItemsBean.registrarCliente(name.value,doc.value,tele.value,dir.value,mail.value)}" value="Registrar Cliente"/>
 		</div>
 	</center>
     </h:form>

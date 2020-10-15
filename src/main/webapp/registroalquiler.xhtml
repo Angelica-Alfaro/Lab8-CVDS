@@ -1,70 +1,68 @@
-<?xml version="1.0" encoding="UTF-8"?>
-        <!--
-        To change this license header, choose License Headers in Project Properties.
-        To change this template file, choose Tools | Templates
-        and open the template in the editor.
-        -->
-        <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+        xmlns:f="http://java.sun.com/jsf/core">
 
-<h:head> 
-<title> Servicio de Alquiler </title>
-<link rel="stylesheet" type="text/css" href="styleClient.css" />
- </h:head>
+<h:head>
+    <title>Items</title>
+     <link rel="stylesheet" href="calStyle.css"></link>
+</h:head>
 
-<h:body>
-    <h:form id="Alquiler_Form">
+<body background="imagenes/accion1.jpg">
+    <h:form id="clientes_form" header="Clientes">
+        <center>
+    	<h2><font color="white" face="georgia" size="6">Welcome to customer registration </font></h2>
+    	</center>
+    <h2> <p align="center"></p></h2>
+    <h2 style="color:white;text-align:center">Items Registrados</h2>
+    </h:form>
+    
+    <h:form>
+    <p:dataTable var="itemm" value="#{AlquilerItemsBean.getclienteUsado().rentados}" rows="5"
+                 paginator="true"
+                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}{RowsPerPageDropdown}"
+                 rowsPerPageTemplate="5,10,15">
+
+    
+        <p:column headerText="nombre">
+            <h:outputText value="#{itemm.item.nombre}" />
+        </p:column>
         
-        <p:dataTable var="itrent" value="#{AlquilerItemsBean.getSelectedCliente().rentados}"
-					 paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                     rows="10">
-			<f:facet name="header">
-                Items Alquilados
-            </f:facet>
-            <p:column headerText="Item Rentado">
-                <h:outputText value="#{itrent.item.nombre}"/>
-            </p:column>
-			
-			<p:column headerText="Multa">
-                <h:outputText value="#{AlquilerItemsBean.consultarMulta(itrent.item)}"/>
-            </p:column>
-			
-            
-			
-        </p:dataTable>
+        <p:column headerText="descripcion">
+            <h:outputText value="#{itemm.item.descripcion}" />
+        </p:column>
 
-        <br/>
-        <p:outputLabel class="labelCenter" style="font-size: 25px"><strong>Alquilar Item</strong></p:outputLabel>
+        <p:column headerText="tarifa">
+            <h:outputText value="#{itemm.item.tarifaxDia}" />
+        </p:column>
+
+        <p:column headerText="Fecha de inicio renta">
+            <h:outputText value="#{itemm.fechainiciorenta}" />
+        </p:column>
+
+        <p:column headerText="Fecha de fin de renta">
+            <h:outputText value="#{itemm.fechafinrenta}" />
+        </p:column>
+
         
-		<h:panelGrid id="grid" cellpadding="5" columns="2" class="panelCenter" style="margin-bottom:10px">
-         
-		 <p:outputLabel value="ItemID"/> 
-		 <p:inputText id="itid" type="int" binding="#{itid}"/> 
+    </p:dataTable>
 
-           <p:outputLabel value="Dias"/> 
-		   <p:inputText id="ndias" type="int" binding="#{dias}"/> 
-
-           <p:outputLabel value="Costo: "/> 
-		   <p:outputLabel value="#{AlquilerItemsBean.costo}"/>
-		   <p:commandButton class="Button" value="Consular costo" action="#{AlquilerItemsBean.consultarCosto(itid.value,dias.value)}" update="Alquiler_Form"/>
-        
-			<p:commandButton class="Button" value="Alquilar" action="registrocliente?faces-redirect = true" >
-                <f:actionListener binding="#{AlquilerItemsBean.registrarAlquilerCliente(itid.value,dias.value)}"/>
-            </p:commandButton>
+    <h2 style="color:white;text-align:center">Alquilar Item </h2>
+	<center>
+	<h:panelGrid columnClasses="firstColumn,secondColumn" columns="2">
+            <p:outputLabel for="item" style="color:white;font-size:150%" value="Item: " />
+            <p:inputText id="item" type="long" binding="#{itemRegistrado}"/>
 			
-		 </h:panelGrid>
-		
-		
-
-
-
-
+            <p:outputLabel for="dias" style="color:white;font-size:150%" value="Dias alquiler: "/>
+            <p:inputText id="dias" type="String" binding="#{dias}"/>
+	</h:panelGrid>
+	<p:commandButton align="center" value="Registrar" class="Button" action="registroalquiler?faces-redirect = true" actionListener="#{AlquilerItemsBean.RegistrarItems(itemRegistrado.value, dias.value)}"/>
+	</center>
+			
+    
+    
 
     </h:form>
-</h:body>
-
-
+    </body>
 </html>

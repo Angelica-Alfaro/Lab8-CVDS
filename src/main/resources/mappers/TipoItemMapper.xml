@@ -5,9 +5,12 @@
   
 <mapper namespace="edu.eci.cvds.sampleprj.dao.mybatis.mappers.TipoItemMapper">
 
-<resultMap type='TipoItem' id='TipoItemResult'>
-    <id property='id' column='id_tipoItem'/>
-    <result property='descripcion' column='descripcion'/>
-</resultMap> 
+  <resultMap type='TipoItem' id='TipoItemResult'>
+    <id property='id' column='id' />
+    <result property='descripcion' column='descripcion' />
+  </resultMap>
+
+
+
                 
 </mapper>
