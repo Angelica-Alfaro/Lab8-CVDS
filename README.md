@@ -1,10 +1,14 @@
-## Integrantes	
+﻿# Laboratorio 8 - MyBatis-Guice-PrimeFaces - 2020-2
 
-    - Laura Alejandra Izquierdo Castro
-    - James Alexander Torres Segura
-## Integración contínua con CircleCI y Heroku
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/db84721b5f1740629610200bbddd69d2)](https://www.codacy.com/gh/Alizeci/LAB08/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Alizeci/LAB08&amp;utm_campaign=Badge_Grade)
-[![CircleCI](https://circleci.com/gh/Alizeci/LAB08.svg?style=svg)](https://circleci.com/gh/Alizeci/LAB08)
+Integrantes:
 
-## Despliegue Vista 1
-[Enlace Heroku](https://app-lab08.herokuapp.com)
+* Maria Angelica Alfaro Fandiño
+
+* Cesar Fernando Ortiz Rocha
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/15b1911adacf44358a9d120c5968524e)](https://www.codacy.com/gh/Angelica-Alfaro/Lab8-CVDS/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Angelica-Alfaro/Lab8-CVDS&amp;utm_campaign=Badge_Grade)
+
+[![CircleCI](https://circleci.com/gh/Angelica-Alfaro/Lab8-CVDS.svg?style=svg)](https://app.circleci.com/pipelines/github/Angelica-Alfaro)
+
+La aplicación desplegada se encuentra en [Heroku](https://videorentall.herokuapp.com)
+                                              

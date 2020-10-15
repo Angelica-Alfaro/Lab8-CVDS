@@ -1,213 +1,229 @@
-package edu.eci.cvds.test;
 
-import static org.junit.Assert.assertEquals;
-import java.util.List;
-import java.sql.Date;
 
-import com.google.inject.Inject;
-import edu.eci.cvds.samples.entities.Cliente;
-import edu.eci.cvds.samples.entities.Item;
-import edu.eci.cvds.samples.entities.TipoItem;
-import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
-import edu.eci.cvds.samples.services.ServiciosAlquiler;
-import edu.eci.cvds.samples.services.ServiciosAlquilerFactory;
-import org.apache.ibatis.session.SqlSession;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.Assert;
+	package edu.eci.cvds.test;
 
-public class ServiciosAlquilerTest {
+	import java.sql.Date;
+	import java.text.SimpleDateFormat;
+	import java.time.LocalDate;
+	import java.util.ArrayList;
+	import java.util.List;
 
-    @Inject
-    private SqlSession sqlSession;
+	import com.google.inject.Inject;
+	import edu.eci.cvds.sampleprj.dao.PersistenceException;
+	import edu.eci.cvds.samples.entities.Cliente;
+	import edu.eci.cvds.samples.entities.Item;
+	import edu.eci.cvds.samples.entities.ItemRentado;
+	import edu.eci.cvds.samples.entities.TipoItem;
+	import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
+	import edu.eci.cvds.samples.services.ServiciosAlquiler;
+	import edu.eci.cvds.samples.services.ServiciosAlquilerFactory;
+	import org.apache.ibatis.session.SqlSession;
+	import org.junit.Before;
+	import org.junit.Test;
+	import org.junit.Assert;
 
-    ServiciosAlquiler serviciosAlquiler;
+	public class ServiciosAlquilerTest {
 
-    public ServiciosAlquilerTest() {
-        serviciosAlquiler = ServiciosAlquilerFactory.getInstance().getServiciosAlquilerTesting();
-    }
+	    @Inject
+	    private SqlSession sqlSession;
 
-    @Before
-    public void setUp() {
-    }
-    
-    @Test
-    public void validRegistrarCliente() {
-    	try {
-    		Cliente cliente = new Cliente("Lola", 3158119, "311234567", "calle 200", "loop@gmail.com", false, null);
-    		serviciosAlquiler.registrarCliente(cliente);
+	    ServiciosAlquiler serviciosAlquiler;
 
-			Cliente clienteCheck = serviciosAlquiler.consultarCliente(cliente.getDocumento());
-			assertEquals(cliente.getDocumento(), clienteCheck.getDocumento());
-	    	
-		} catch (ExcepcionServiciosAlquiler e) {
-			Assert.assertFalse(false);
-		}
-    }
-    
-    @Test
-    public void invalidRegistrarCliente() {
-    	boolean r = false;
-    	try {
-    		Cliente cliente = new Cliente("Lola", 3158200, "311234567", "calle 200", "looping@gmail.com", false, null);
-    		serviciosAlquiler.registrarCliente(cliente);
-    		
-    		Cliente cliente2 = new Cliente("pepe", 3158200, "311234567", "calle 201", "pol@gmail.com", false, null);
-    		serviciosAlquiler.registrarCliente(cliente2);
-    		
-		} catch (ExcepcionServiciosAlquiler e) {
-			r = true;
-		}
-    	Assert.assertTrue(r);
-    }
-    
-    @Test
-    public void validConsultarCliente() {
-    	try {
-			Cliente cliente = serviciosAlquiler.consultarCliente(2158119);
-			assertEquals(2158119, cliente.getDocumento());
-	    	
-		} catch (ExcepcionServiciosAlquiler e) {
-			Assert.assertFalse(false);
-		}
-    }
-    
-    @Test
-    public void invalidConsultarCliente() {
-    	try {
-			Cliente cliente = serviciosAlquiler.consultarCliente(2158110);
-			Assert.assertNull(cliente);
-	    	
-		} catch (ExcepcionServiciosAlquiler e) {
-			Assert.assertFalse(false);
-		}
-    }
-    
-    @Test
-    public void validConsultarClientes() {
-    	try {
-			List<Cliente> clientes = serviciosAlquiler.consultarClientes();
-			Assert.assertTrue(clientes.size() > 0);
-	    	
-		} catch (ExcepcionServiciosAlquiler e) {
-			Assert.assertFalse(false);
-		}
-    }
-    
-    @Test
-    public void validRegistrarItem() {
-    	try {
-    		Date fecha2 = new Date(120, 11, 25);
-    		TipoItem tipo2 = new TipoItem(91, "Belico");
-    		Item item = new Item(tipo2, 14  , "The pacific" , "serie", fecha2, 140, "dvd", "Belico");
-    		serviciosAlquiler.registrarItem(item);
-    		
-    		Item itemCheck = serviciosAlquiler.consultarItem(item.getId());
-			assertEquals(item.getId(), itemCheck.getId());
-    		
-		} catch (ExcepcionServiciosAlquiler e) {
-			Assert.assertFalse(false);
-		}
-    }
-    
-    @Test
-    public void invalidRegistrarItem() {
-    	boolean r = false;
-    	try {
-    		Date fecha2 = new Date(120, 11, 25);
-    		TipoItem tipo2 = new TipoItem(91, "Belico");
-    		Item item = new Item(tipo2, 15  , "The pacific" , "serie", fecha2, 140, "dvd", "Belico");
-    		serviciosAlquiler.registrarItem(item);
-    		
-    		Item item2 = new Item(tipo2, 15  , "Ocean" , "serie", fecha2, 140, "dvd", "Belico");
-    		serviciosAlquiler.registrarItem(item2);
-    		
-		} catch (ExcepcionServiciosAlquiler e) {
-			r = true;
-		}
-    	Assert.assertTrue(r);
-    }
-    
-    @Test
-    public void validConsultarItem() {
-    	try {
-			Item item = serviciosAlquiler.consultarItem(93);
-			assertEquals(93, item.getId());
-	    	
-		} catch (ExcepcionServiciosAlquiler e) {
-			Assert.assertFalse(false);
-		}
-    }
-    
-    @Test
-    public void invalidConsultarItem() {
-    	try {
-    		Item item = serviciosAlquiler.consultarItem(0);
-			Assert.assertNull(item);
-	    	
-		} catch (ExcepcionServiciosAlquiler e) {
-			Assert.assertFalse(false);
-		}
-    }
-    
-    @Test
-    public void validConsultarItemsDisponibles() {
-    	try {
-    		
-    		
-			List<Item> items = serviciosAlquiler.consultarItemsDisponibles();
-			Assert.assertTrue(items.size() > 0);
-	    	
-		} catch (ExcepcionServiciosAlquiler e) {
-			Assert.assertFalse(false);
-		}
-    }
-    
-    @Test
-    public void validVetarCliente() {
-    	try {
-			serviciosAlquiler.vetarCliente(2158119, true);
-			Cliente cliente = serviciosAlquiler.consultarCliente(2158119);
-			assertEquals(true, cliente.isVetado());
-	    	
-		} catch (ExcepcionServiciosAlquiler e) {
-			Assert.assertFalse(false);
-		}
-    }
-    
-    @Test
-    public void validRegistrarAlquiler() {
-    	try { 
-    		//Se busca el item disponible
-            Date fecharegistro = java.sql.Date.valueOf("2020-10-10");
-    	    List<Item> itDis = serviciosAlquiler.consultarItemsDisponibles();
-    	    Item it = itDis.get(0);
-    	    //Se alquila
-    	    Cliente cl = serviciosAlquiler.consultarCliente(2158119);
-    	    serviciosAlquiler.registrarAlquilerCliente(fecharegistro, cl.getDocumento(), it, 10);
-	    	
-		} catch (ExcepcionServiciosAlquiler e) {
-			Assert.assertFalse(false);
-		}
-    }
-    
-    @Test
-    public void registrarAlquilerSinItem() {
-    	boolean r = false;
-    	try { 
-    		//Crea item
-    		Date fecharegistro = java.sql.Date.valueOf("2020-10-11");
-            Date fecha = java.sql.Date.valueOf("2020-10-10");
-    	    TipoItem tipo2 = new TipoItem(91, "Belico");
-    	    Item item = new Item(tipo2, 16  , "pororo" , "serie", fecha, 140, "dvd", "Belico");
-    	    
-    	    //Intenta hacer alquiler
-    	    serviciosAlquiler.registrarAlquilerCliente(fecharegistro, 2158119, item, 15);
-	    	
-		} catch ( ExcepcionServiciosAlquiler e) {
-			r = true;
-		}
-    	Assert.assertTrue(r);
-    }
-    
-}
+	    public ServiciosAlquilerTest() {
+	        serviciosAlquiler = ServiciosAlquilerFactory.getInstance().getServiciosAlquilerTesting();
+	    }
+	    
+	    //Consultar el valor de la multa por retraso de un item inexistente.
+	    @Test
+	    public void valorMultaRetrasoxDiaNoExisteItemTest() throws PersistenceException{
+	        try{
+	            serviciosAlquiler.valorMultaRetrasoxDia(30);
+	        }
+	        catch (Exception e ){
+	            Assert.assertEquals(null,e.getMessage());
+	        }
+	    }
+	    
+	    
+	    //Consultar el valor de la multa por retraso de un item existente
+	    @Test
+	    public void valorMultaRetrasoxDiaExistentesTest(){
+	        try{
+	        	Assert.assertEquals(serviciosAlquiler.valorMultaRetrasoxDia(13),1998);
+	        }
+	        catch (Exception e){
+	            System.out.println(e.getMessage());
+	        }
+	    }
+	    
+	    //Consultar cliente que no existe.
+	    @Test
+	    public void consultarClienteNoExistenteTest() {
+	    	try{
+	            serviciosAlquiler.consultarCliente(46);
+	        }
+	        catch (ExcepcionServiciosAlquiler e ){
+	            Assert.assertEquals("Error al consultar el cliente ",e.getMessage());
+	        }
+	        catch (Exception e){
+	            System.out.println(e.getMessage());
+	        }
+	    }
+	    
+	    //Consultar cliente que existe.
+	    @Test
+	    public void consultarClienteExisteTest() {
+	    	try{
+	    		Assert.assertEquals(serviciosAlquiler.consultarCliente(30).getEmail(),"wvhneivjbn");
+	        }
+	        catch (Exception e){
+	            System.out.println(e.getMessage());
+	        }
+	    }
+	    
+	    //Consultar items de cliente no existente.
+	    @Test
+	    public void consultarItemsClienteNoExisteTest() {
+	    	try{
+	            serviciosAlquiler.consultarItemsCliente(47);
+	        }
+	        catch (ExcepcionServiciosAlquiler e ){
+	            Assert.assertEquals("El cliente no esta registrado",e.getMessage());
+	        }
+	        catch (Exception e){
+	            System.out.println(e.getMessage());
+	        }
+	    }
+	    
+	    //Consultar items de cliente existente.
+	    @Test
+	    public void consultarItemsClienteExistenteTest() {
+	    	try{
+	            serviciosAlquiler.consultarItemsCliente(20);
+	            Assert.assertEquals(serviciosAlquiler.consultarCliente(20).getDocumento(),20);
+	    	}catch (Exception e){
+	            System.out.println(e.getMessage());
+	        }
+	    }
+	    
+	    //Consultar item no existente.
+	    @Test
+	    public void consultarItemNoExisteTest() {
+	    	try{
+	            serviciosAlquiler.consultarItem(17);
+	        }
+	        catch (ExcepcionServiciosAlquiler e ){
+	            Assert.assertEquals("Error al consultar el item",e.getMessage());
+	        }
+	        catch (Exception e){
+	            System.out.println(e.getMessage());
+	        }
+	    }
+	    
+	    //Consultar item existente.
+	    @Test
+	    public void consultarItemExisteTest() {
+	    	try{
+	            Assert.assertEquals(serviciosAlquiler.consultarItem(13).getId(), 13);
+	    	}catch (Exception e){
+	            System.out.println(e.getMessage());
+	        }
+	    }
+	    
+	    //Registrar alquiler del cliente.
+	    @Test
+	    public void registrarAlquilerClienteInvalidoTest() {
+	    	try{
+	    		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	    		Item it = new Item(new TipoItem(100,"Drama"),2026,"Si decido quedarme","Historia de amor",dateFormat.parse("2026-07-25"),5000, "Compra","Romance");
+	    		serviciosAlquiler.registrarItem(it);
+	    		LocalDate at =LocalDate.parse("2019-09-28");
+	    		serviciosAlquiler.registrarAlquilerCliente(Date.valueOf(at),19985L, it, 10);
+	        }
+	        catch (Exception e){
+	        	Assert.assertEquals("Error al registarar el item 2026",e.getMessage());
+	        }
+	    }
+	    
+	    //Registrar un cliente.
+	    @Test
+	    public void registrarClienteValidoTest() {
+	    	try{
+	    		serviciosAlquiler.registrarCliente(new Cliente("Pepito Perez",672375,"32222","narnia3","pepitoperez@yahoo"));
+	    		String email = serviciosAlquiler.consultarCliente(672375).getEmail();
+	    		
+	            Assert.assertEquals(email,"pepitoperez@yahoo");
+	        }
+	        catch (Exception e){
+	            System.out.println(e.getMessage());
+	        }
+	    }
+	    
+	    //Consulta costo de alquiler de un item no existente
+	    @Test
+	    public void consultarCostoAlquilerNoExistenteTest(){
+	        try{
+	            serviciosAlquiler.consultarCostoAlquiler(89,2);
+	        }
+	        catch (ExcepcionServiciosAlquiler e ){
+	            Assert.assertEquals("Error al consultar el item",e.getMessage());
+	        }
+	        catch (Exception e){
+	            System.out.println(e.getMessage());
+	        }
+	    }
+	     
+	    //Consulta costo de alquiler cuando el número de dias en menor a cero.
+	    @Test
+	    public void consultarCostoAlquilerNumDiasMenorCero(){
+	        try{
+	            serviciosAlquiler.consultarCostoAlquiler(92,-4);
+	        }
+	        catch (ExcepcionServiciosAlquiler e ){
+	            Assert.assertEquals("Error al consultar el item" ,e.getMessage());
+	        }
+	        catch (Exception e){
+	            System.out.println(e.getMessage());
+	        }
+	    }
+	    
+	    //Consultar costo de alquiler de un item existente.
+	    @Test
+	    public void consultarCostoAlquilerExistente(){
+	        try{
+	            Assert.assertEquals(serviciosAlquiler.consultarCostoAlquiler(99,1),99);
+	        }
+	        catch (Exception e){
+	            System.out.println(e.getMessage());
+	        }
+	    }
+	    
+	    //Registrar un item.
+	    @Test
+	    public void registrarItemValidoTest() {
+	    	try{
+	    		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	    		Item it = new Item(new TipoItem(90,"Aventura"),2027,"Si decido quedarme","Historia de amor",dateFormat.parse("2026-07-25"),5000, "Compra","Romance");
+	    		serviciosAlquiler.registrarItem(it);
+	            Assert.assertEquals(serviciosAlquiler.consultarItem(2027).getDescripcion(),"Historia de amor");
+	        }
+	        catch (Exception e){
+	            System.out.println(e.getMessage());
+	        }
+	    }
+	    //@Test
+	    public void emptyDB() {
+	        for(int i = 0; i < 100; i += 10) {
+	            boolean r = false;
+	            try {
+	                Cliente cliente = serviciosAlquiler.consultarCliente(8);
+	            } catch(ExcepcionServiciosAlquiler e) {
+	                r = true;
+	            } catch(IndexOutOfBoundsException e) {
+	                r = true;
+	            }
+	            // Validate no Client was found;
+	            Assert.assertTrue(r);
+	        }
+	    }     
+	}

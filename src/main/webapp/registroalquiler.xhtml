@@ -9,16 +9,13 @@
      <link rel="stylesheet" href="calStyle.css"></link>
 </h:head>
 
-<h:body>
-    
+<body background="imagenes/accion1.jpg">
     <h:form id="clientes_form" header="Clientes">
-        <div class="center">
-        <h1><p align="center" style="font-size:200%;">Registro de Alquiler</p></h1>
-        <h2><p align="center" style="font-size:100%;">James Torres y Laura Izquierdo</p></h2>
-		<img src="https://kvizo.com.br/wp-content/uploads/2020/06/giphy-1.gif" alt="programing" style="width:140px;height:120px;"></img>
-        </div>
+        <center>
+    	<h2><font color="white" face="georgia" size="6">Welcome to customer registration </font></h2>
+    	</center>
     <h2> <p align="center"></p></h2>
-    <h2 style="color:black;text-align:center">Items Registrados</h2>
+    <h2 style="color:white;text-align:center">Items Registrados</h2>
     </h:form>
     
     <h:form>
@@ -51,24 +48,21 @@
         
     </p:dataTable>
 
-    <h2 style="color:black;text-align:center">Registrar Item alquilado</h2>
-    <h3 style="color:black;text-align:center"> </h3>
-    <h3 style="color:black;text-align:center"> </h3>
-
+    <h2 style="color:white;text-align:center">Alquilar Item </h2>
+	<center>
+	<h:panelGrid columnClasses="firstColumn,secondColumn" columns="2">
+            <p:outputLabel for="item" style="color:white;font-size:150%" value="Item: " />
+            <p:inputText id="item" type="long" binding="#{itemRegistrado}"/>
+			
+            <p:outputLabel for="dias" style="color:white;font-size:150%" value="Dias alquiler: "/>
+            <p:inputText id="dias" type="String" binding="#{dias}"/>
+	</h:panelGrid>
+	<p:commandButton align="center" value="Registrar" class="Button" action="registroalquiler?faces-redirect = true" actionListener="#{AlquilerItemsBean.RegistrarItems(itemRegistrado.value, dias.value)}"/>
+	</center>
+			
     
-    <p:panelGrid columns="2" style="max-width:500px;margin-left:auto;margin-right:auto; background-color: #3CBC8D">
-				<p:inputText style="font-weight:bold " width="50%" id="Item" placeholder="Item: " type="int" value="#{itemRegistrado}"/>
-				<p:inputText style="font-weight:bold " width="50%" id="Dias" placeholder="Dias: " type="int" value="#{dias}" />
-                </p:panelGrid>
-
-    <p:panelGrid columns="1" style="max-width:500px;margin-left:auto;margin-right:auto;">
-				<p:commandButton align="center" style="background-color: #3CBC8D" value="registrar" class="Button" action="registroalquiler?faces-redirect = true" actionListener="#{AlquilerItemsBean.RegistrarItems(itemRegistrado, dias)}"/>
-    </p:panelGrid>
     
-    <p:panelGrid columns="1" style="max-width:500px;margin-left:auto;margin-right:auto;">
-				<p:commandButton align="center" style="background-color: #3CBC8D" value="volver" class="Button" action="registrocliente?faces-redirect = true" />
-	</p:panelGrid>
 
     </h:form>
-    </h:body>
+    </body>
 </html>
